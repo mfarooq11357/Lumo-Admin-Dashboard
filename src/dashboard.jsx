@@ -1,135 +1,149 @@
-'use client'
+"use client"
 
-import { Users } from 'lucide-react'
-import { Box, Text } from '@chakra-ui/react'
+import { useState } from "react"
+import { Search, Battery, Activity, DollarSign, Lightbulb, LogOut, Menu } from "lucide-react"
 
-export default function Dashboard() {
+const Dashboard = () => {
+  const [showSignOut, setShowSignOut] = useState(false)
+
+  // Stats data
+  const stats = [
+    {
+      title: "Total Chargers",
+      value: "48",
+      icon: <Battery className="h-5 w-5" />,
+      iconBg: "bg-blue-100",
+    },
+    {
+      title: "Active Sessions",
+      value: "16",
+      icon: <Activity className="h-5 w-5" />,
+      iconBg: "bg-green-100",
+    },
+    {
+      title: "Today's Earnings",
+      value: "$684.25",
+      icon: <DollarSign className="h-5 w-5" />,
+      iconBg: "bg-yellow-100",
+    },
+    {
+      title: "Energy Delivered",
+      value: "2,865 kWh",
+      icon: <Lightbulb className="h-5 w-5" />,
+      iconBg: "bg-purple-100",
+    },
+  ]
+
   return (
-    <div className="p-6 max-w-6xl mx-auto space-y-8">
-      {/* Welcome Header */}
-      <div className="flex items-center gap-2">
-        <h1 className="text-3xl font-bold">
-          <span className="text-red-600">Welcome Back,</span> "Ahmed Ali"
-        </h1>
+    <div className="p-6 bg-white">
+      {/* Top Bar */}
+      <div className="flex justify-between items-center mb-8">
+        <div className="w-full max-w-xl">
+          <div className="relative">
+            <input
+              type="text"
+              placeholder="Search..."
+              className="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-1 focus:ring-teal-500"
+            />
+            <Search className="absolute right-3 top-2.5 h-5 w-5 text-gray-400" />
+          </div>
+        </div>
+
+        <div className="flex items-center">
+          <div
+            className="flex items-center gap-2 cursor-pointer relative"
+            onMouseEnter={() => setShowSignOut(true)}
+            onMouseLeave={() => setShowSignOut(false)}
+          >
+            <span className="text-teal-900 font-medium">Admin User</span>
+            <div className="h-8 w-8 rounded-full bg-gray-200 flex items-center justify-center">
+              <Menu className="h-5 w-5 text-teal-900" />
+            </div>
+
+            {/* Sign Out Dropdown */}
+            {showSignOut && (
+              <div className="absolute right-0 top-full mt-1 w-32 bg-white shadow-lg rounded-md py-1 z-10 border border-gray-200">
+                <button className="flex items-center gap-2 w-full px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">
+                  <LogOut className="h-4 w-4" />
+                  Sign Out
+                </button>
+              </div>
+            )}
+          </div>
+        </div>
       </div>
 
-      {/* Stats Cards */}
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-        <Box className="bg-pink-50 p-6 rounded-lg shadow-md">
-          <div className="flex items-center gap-4">
-            <Users className="w-6 h-6 text-pink-600" />
-            <div>
-              <Text className="text-2xl font-bold">105</Text>
-              <Text className="text-sm text-muted-foreground">Total Students</Text>
-            </div>
-          </div>
-        </Box>
+      {/* Dashboard Header */}
+      <h1 className="text-2xl font-bold text-teal-900 mb-6">Dashboard Overview</h1>
 
-        <Box className="bg-yellow-50 p-6 rounded-lg shadow-md">
-          <div className="flex items-center gap-4">
-            <Users className="w-6 h-6 text-yellow-600" />
+      {/* Stats Grid */}
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+        {stats.map((stat, index) => (
+          <div key={index} className="border border-gray-200 rounded-lg p-6 flex justify-between items-center">
             <div>
-              <Text className="text-2xl font-bold">75</Text>
-              <Text className="text-sm text-muted-foreground">Total Alumnis</Text>
+              <p className="text-sm text-gray-500 mb-1">{stat.title}</p>
+              <p className="text-3xl font-bold text-gray-900">{stat.value}</p>
             </div>
+            <div className={`${stat.iconBg} p-3 rounded-full`}>{stat.icon}</div>
           </div>
-        </Box>
-
-        <Box className="bg-blue-50 p-6 rounded-lg shadow-md">
-          <div className="flex items-center gap-4">
-            <Users className="w-6 h-6 text-blue-600" />
-            <div>
-              <Text className="text-2xl font-bold">5</Text>
-              <Text className="text-sm text-muted-foreground">Total Admins</Text>
-            </div>
-          </div>
-        </Box>
+        ))}
       </div>
 
-      {/* Activity and Events Section */}
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-        {/* Activity Log */}
-        <Box className="p-6 rounded-lg shadow-md">
-          <Text className="text-xl font-semibold mb-4">Activity</Text>
+      {/* Additional Dashboard Content - Charts, Tables, etc. */}
+      <div className="mt-8 grid grid-cols-1 lg:grid-cols-2 gap-6">
+        {/* Recent Activity */}
+        {/* <div className="border border-gray-200 rounded-lg p-6">
+          <h2 className="text-lg font-semibold text-teal-900 mb-4">Recent Activity</h2>
           <div className="space-y-4">
-            {activities.map((activity, index) => (
-              <div key={index} className="flex items-start gap-4">
-                <div className="w-10 h-10 rounded-full bg-yellow-200 flex items-center justify-center text-yellow-800 font-semibold">
-                  {activity.user.charAt(0)}
+            {[1, 2, 3, 4].map((item) => (
+              <div key={item} className="flex items-center justify-between pb-4 border-b border-gray-100">
+                <div className="flex items-center gap-3">
+                  <div className="h-10 w-10 rounded-full bg-gray-100 flex items-center justify-center text-teal-900 font-medium">
+                    U{item}
+                  </div>
+                  <div>
+                    <p className="text-sm font-medium">Charging Session #{1000 + item}</p>
+                    <p className="text-xs text-gray-500">
+                      {new Date(Date.now() - item * 1000 * 60 * 30).toLocaleTimeString()}
+                    </p>
+                  </div>
                 </div>
-                <div>
-                  <Text className="font-medium">{activity.user}</Text>
-                  <Text className={`text-sm ${activity.type === 'Log In' ? 'text-green-500' : 'text-red-500'}`}>
-                    {activity.type}
-                  </Text>
-                  <Text className="text-xs text-muted-foreground">
-                    Time: {activity.time} | Location: {activity.location}
-                  </Text>
-                </div>
+                <span className="text-sm text-green-600 font-medium">Completed</span>
               </div>
             ))}
           </div>
-        </Box>
+          <button className="mt-4 text-sm text-teal-600 font-medium">View All Activity</button>
+        </div> */}
 
-        {/* Upcoming Events */}
-        <Box className="p-6 rounded-lg shadow-md">
-          <Text className="text-xl font-semibold mb-4">Upcoming Events:</Text>
-          <div className="space-y-6">
-            {events.map((event, index) => (
-              <div key={index} className="flex gap-4">
-                <Text className="text-sm text-muted-foreground min-w-[80px]">
-                  {event.date}
-                </Text>
-                <div>
-                  <Text className="font-medium">{event.title}</Text>
-                  <Text className="text-sm text-muted-foreground">
-                    Venue: {event.venue}
-                  </Text>
+        {/* Charger Status */}
+        {/* <div className="border border-gray-200 rounded-lg p-6">
+          <h2 className="text-lg font-semibold text-teal-900 mb-4">Charger Status</h2>
+          <div className="space-y-4">
+            {[1, 2, 3, 4].map((item) => (
+              <div key={item} className="flex items-center justify-between pb-4 border-b border-gray-100">
+                <div className="flex items-center gap-3">
+                  <div
+                    className={`h-3 w-3 rounded-full ${
+                      item % 3 === 0 ? "bg-red-500" : item % 2 === 0 ? "bg-yellow-500" : "bg-green-500"
+                    }`}
+                  ></div>
+                  <p className="text-sm font-medium">Charger #{item}</p>
                 </div>
+                <span
+                  className={`text-sm font-medium ${
+                    item % 3 === 0 ? "text-red-600" : item % 2 === 0 ? "text-yellow-600" : "text-green-600"
+                  }`}
+                >
+                  {item % 3 === 0 ? "Offline" : item % 2 === 0 ? "Idle" : "In Use"}
+                </span>
               </div>
             ))}
           </div>
-        </Box>
+          <button className="mt-4 text-sm text-teal-600 font-medium">View All Chargers</button>
+        </div> */}
       </div>
     </div>
   )
 }
 
-const activities = [
-  {
-    user: "Ahmed Ali",
-    type: "Log In",
-    time: "08:55 UTC",
-    location: "Islamabad"
-  },
-  {
-    user: "Sajid Hussain",
-    type: "Log Out",
-    time: "08:55 UTC",
-    location: "Islamabad"
-  },
-  {
-    user: "Mohsin Ali",
-    type: "Log In",
-    time: "08:55 UTC",
-    location: "Islamabad"
-  }
-]
-
-const events = [
-  {
-    date: "05-12-2024",
-    title: "Upcoming Workshop On Digital Marketing",
-    venue: "ISLAMABAD"
-  },
-  {
-    date: "05-12-2024",
-    title: "Upcoming Workshop On Digital Marketing",
-    venue: "ISLAMABAD"
-  },
-  {
-    date: "05-12-2024",
-    title: "Upcoming Workshop On Digital Marketing",
-    venue: "ISLAMABAD"
-  }
-]
+export default Dashboard

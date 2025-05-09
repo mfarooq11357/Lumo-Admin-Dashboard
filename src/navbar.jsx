@@ -1,73 +1,43 @@
+import { NavLink } from "react-router-dom"
+import { LayoutGrid, BatteryCharging, MonitorSmartphone, DollarSign, Users, MessageSquare } from "lucide-react"
 
-import React from "react";
-import { NavLink } from "react-router-dom"; // Import NavLink
-import {
-  LayoutDashboard,
-  Users,
-  Calendar,
-  MessageSquare,
-  DollarSign,
-  Bell,
-  HelpCircle,
-  Settings,
-} from "lucide-react";
-
-const Sidebar = ({ className }) => {
-  const customNavLink = (icon, label, to) => (
-    <NavLink
-      to={to}
-      className={({ isActive }) =>
-        `w-full flex items-center justify-start px-4 py-2 rounded ${
-          isActive ? "bg-zinc-800 text-yellow-500" : "text-white hover:bg-zinc-800 hover:text-yellow-500"
-        }`
-      }
-    >
-      {icon}
-      <span className="ml-2">{label}</span>
-    </NavLink>
-  );
+const Navbar = () => {
+  // Navigation items with their icons, labels, and routes
+  const navItems = [
+    { icon: <LayoutGrid size={20} />, label: "Dashboard", to: "/dashboard" },
+    { icon: <BatteryCharging size={20} />, label: "Charger Management", to: "/charger-management" },
+    { icon: <MonitorSmartphone size={20} />, label: "Session Monitoring", to: "/session-monitoring" },
+    { icon: <DollarSign size={20} />, label: "Earnings Tracking", to: "/earnings-tracking" },
+    { icon: <Users size={20} />, label: "User Management", to: "/manage-user" },
+    { icon: <MessageSquare size={20} />, label: "Messages", to: "/Chat" },
+  ]
 
   return (
-    <div className={`pb-12 min-h-screen w-[210px] bg-black text-white fixed left-0 top-0 ${className}`}>
-      <div className="space-y-4 py-4">
-        <div className="px-4 py-2">
-          <h2 className="mb-2 px-2 text-lg font-semibold tracking-tight text-yellow-500">
-            👀 Admin
-          </h2>
-        </div>
-        <nav className="space-y-1">
-          {customNavLink(<LayoutDashboard className="h-4 w-4" />, "Dashboard", "/dashboard")}
-          {customNavLink(<Users className="h-4 w-4" />, "Manage User", "/manage-user")}
-          {customNavLink(<Calendar className="h-4 w-4" />, "Manage Events", "/manage-events")}
-          {customNavLink(<MessageSquare className="h-4 w-4" />, "Certifications", "/Certifications")}
-          {customNavLink(<DollarSign className="h-4 w-4" />, "Finances", "/finances")}
-          <div className="my-4 border-t border-zinc-800" />
-          {customNavLink(<Bell className="h-4 w-4" />, "Notifications", "/notifications")}
-          {customNavLink(<HelpCircle className="h-4 w-4" />, "Help", "/help")}
-          {customNavLink(<Settings className="h-4 w-4" />, "Settings", "/settings")}
-        </nav>
+    <div className="min-h-screen w-[243px] bg-teal-900 text-white ">
+      {/* Sidebar Header */}
+      <div className="p-4 mb-4">
+        <h1 className="text-xl font-bold text-white">EV Admin Dashboard</h1>
       </div>
-      <div className="mt-auto px-4">
-        <div className="flex items-center gap-2 py-2 transition-transform duration-200 ease-in-out hover:bg-zinc-800 hover:scale-105 rounded px-2 cursor-pointer">
-          <div className="flex items-center justify-center h-10 w-10 rounded-full bg-gray-500">
-            <img src="/public/image 1.png" alt="Avatar" className="h-10 w-10 rounded-full object-cover" />
-          </div>
-          <div className="text-sm">
-            <p className="font-medium">Ahmed Ali</p>
-          </div>
-        </div>
-      </div>
-    </div>
-  );
-};
 
-const Layout = ({ children }) => {
-  return (
-    <div className="flex bg-white text-black">
-      <Sidebar />
-      <main className="">{children}</main>
+      {/* Main Navigation */}
+      <nav className="flex-1 px-4 space-y-2">
+        {navItems.map((item, index) => (
+          <NavLink
+            key={index}
+            to={item.to}
+            className={({ isActive }) =>
+              `flex items-center p-3 rounded-md transition-colors w-full ${
+                isActive ? "bg-white text-teal-900" : "text-white hover:bg-teal-800"
+              }`
+            }
+          >
+            <span className="mr-3 flex-shrink-0">{item.icon}</span>
+            <span className="whitespace-nowrap">{item.label}</span>
+          </NavLink>
+        ))}
+      </nav>
     </div>
-  );
-};
+  )
+}
 
-export default Layout;
+export default Navbar

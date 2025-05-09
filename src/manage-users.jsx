@@ -1,107 +1,132 @@
-import React, { useState, useEffect } from "react";
-import axios from "axios";
+"use client"
+import { Search, User, Trash2 } from "lucide-react"
+import AdminUserDropdown from "./components/AdminUserDropdown"
+import Pagination from "./components/Pagination"
 
-const UsersPage = () => {
-  // State management
-  const [users, setUsers] = useState([]);
-  const [currentPage, setCurrentPage] = useState(1);
-  const [totalPages, setTotalPages] = useState(1);
-  const [isModalOpen, setIsModalOpen] = useState(false);
-  const [selectedUser, setSelectedUser] = useState(null);
-
-  // Fetch users from the backend API with pagination
-  const fetchUsers = async (page) => {
-    try {
-      const token = localStorage.getItem("token"); // Retrieve JWT token
-      const response = await axios.get(
-        `http://localhost:3000/user/allUsers?page=${page}&limit=10`,
-        {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        }
-      );
-      setUsers(response.data.users);
-      setCurrentPage(response.data.currentPage);
-      setTotalPages(response.data.totalPages);
-    } catch (error) {
-      console.error("Error fetching users:", error);
-    }
-  };
-
-  // Fetch users when the component mounts or the page changes
-  useEffect(() => {
-    fetchUsers(currentPage);
-  }, [currentPage]);
-
-  // Handle pagination button clicks
-  const handlePageChange = (page) => {
-    setCurrentPage(page);
-  };
-
-  // Open the edit modal with the selected user
-  const openModal = (user) => {
-    setSelectedUser(user);
-    setIsModalOpen(true);
-  };
-
-  // Close the edit modal
-  const closeModal = () => {
-    setIsModalOpen(false);
-    setSelectedUser(null);
-  };
-
-  // Update user role and subrole via the backend API
-  const handleUpdateRole = async (role, subRole) => {
-    try {
-      const token = localStorage.getItem("token");
-      await axios.put(
-        `http://localhost:3000/user/updateRole/${selectedUser._id}`,
-        { role, subRole },
-        {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        }
-      );
-      closeModal();
-      fetchUsers(currentPage); // Refresh the user list
-    } catch (error) {
-      console.error("Error updating role:", error);
-    }
-  };
+const ManageUsers = () => {
+  // Sample user data
+  const users = [
+    {
+      id: 1,
+      name: "David Mitchell",
+      email: "david.m@example.com",
+      phone: "+1 (555) 123-4567",
+      joinDate: "Jan 15, 2023",
+    },
+    {
+      id: 2,
+      name: "Sarah Johnson",
+      email: "sarahj@example.com",
+      phone: "+1 (555) 987-6543",
+      joinDate: "Mar 3, 2023",
+    },
+    {
+      id: 3,
+      name: "Michael Lee",
+      email: "michael.l@example.com",
+      phone: "+1 (555) 234-5678",
+      joinDate: "Nov 12, 2022",
+    },
+    {
+      id: 4,
+      name: "Lisa Wong",
+      email: "lisaw@example.com",
+      phone: "+1 (555) 765-4321",
+      joinDate: "Jun 2, 2023",
+    },
+    {
+      id: 5,
+      name: "Robert Wilson",
+      email: "robert.w@example.com",
+      phone: "+1 (555) 876-5432",
+      joinDate: "Feb 28, 2023",
+    },
+  ]
 
   return (
-    <div className="container mx-auto p-6">
-      <h1 className="text-3xl font-bold mb-6 text-gray-800">Users</h1>
+    <div className="p-6 bg-white">
+      {/* Top Bar */}
+      <div className="flex justify-between items-center mb-8">
+        <div></div>
+        <AdminUserDropdown />
+      </div>
+
+      {/* Page Header */}
+      <div className="mb-6">
+        <h1 className="text-2xl font-bold text-teal-900">User Management</h1>
+        <p className="text-gray-600">View and manage all users of the Station Finder app</p>
+      </div>
+
+      {/* Stats Card */}
+      <div className="mb-8">
+        <div className="border border-gray-200 rounded-lg p-6 max-w-xs">
+          <div className="flex items-center gap-4">
+            <div className="bg-blue-100 p-3 rounded-full">
+              <User className="h-5 w-5 text-blue-600" />
+            </div>
+            <div>
+              <p className="text-sm text-gray-500">Total Users</p>
+              <p className="text-3xl font-bold text-gray-900">1,248</p>
+            </div>
+          </div>
+          <div className="mt-4 flex items-center text-green-600">
+            <svg
+              className="w-4 h-4 mr-1"
+              fill="none"
+              stroke="currentColor"
+              viewBox="0 0 24 24"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M5 10l7-7m0 0l7 7m-7-7v18"></path>
+            </svg>
+            <span className="text-sm font-medium">5.27% increase this month</span>
+          </div>
+        </div>
+      </div>
+
+      {/* Search Bar */}
+      <div className="mb-6 flex justify-end">
+        <div className="relative w-full max-w-md">
+          <input
+            type="text"
+            placeholder="Search"
+            className="w-full px-10 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-1 focus:ring-teal-500"
+          />
+          <Search className="absolute left-3 top-2.5 h-5 w-5 text-gray-400" />
+        </div>
+      </div>
 
       {/* Users Table */}
-      <div className="overflow-x-auto">
-        <table className="min-w-full bg-white shadow-md rounded-lg overflow-hidden">
-          <thead className="bg-gray-100">
+      <div className="border border-gray-200 rounded-lg overflow-hidden">
+        <table className="min-w-full divide-y divide-gray-200">
+          <thead className="bg-teal-900 text-white">
             <tr>
-              <th className="py-3 px-6 text-left text-sm font-semibold text-gray-700">Roll No</th>
-              <th className="py-3 px-6 text-left text-sm font-semibold text-gray-700">Name</th>
-              <th className="py-3 px-6 text-left text-sm font-semibold text-gray-700">Email</th>
-              <th className="py-3 px-6 text-left text-sm font-semibold text-gray-700">Role</th>
-              <th className="py-3 px-6 text-left text-sm font-semibold text-gray-700">Gender</th>
-              <th className="py-3 px-6 text-left text-sm font-semibold text-gray-700">Actions</th>
+              <th className="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider">User</th>
+              <th className="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider">Email/Phone</th>
+              <th className="px-6 py-3 text-right text-xs font-medium uppercase tracking-wider">Actions</th>
             </tr>
           </thead>
-          <tbody>
+          <tbody className="bg-white divide-y divide-gray-200">
             {users.map((user) => (
-              <tr key={user._id} className="border-b hover:bg-gray-50">
-                <td className="py-4 px-6 text-gray-800">{user.rollNo}</td>
-                <td className="py-4 px-6 text-gray-800">{`${user.firstName} ${user.lastName}`}</td>
-                <td className="py-4 px-6 text-gray-800">{user.officialEmail}</td>
-                <td className="py-4 px-6 text-gray-800">{user.role}</td>
-                <td className="py-4 px-6 text-gray-800">{user.gender}</td>
-                <td className="py-4 px-6">
-                  <button
-                    onClick={() => openModal(user)}
-                    className="text-blue-600 hover:text-blue-800 font-medium"
-                  >
-                    Edit
+              <tr key={user.id} className="hover:bg-gray-50">
+                <td className="px-6 py-4 whitespace-nowrap">
+                  <div className="flex items-center">
+                    <div className="h-10 w-10 rounded-full bg-gray-200 flex items-center justify-center">
+                      <span className="text-sm font-medium text-gray-600">{user.name.charAt(0)}</span>
+                    </div>
+                    <div className="ml-4">
+                      <div className="text-sm font-medium text-gray-900">{user.name}</div>
+                      <div className="text-sm text-gray-500">Joined {user.joinDate}</div>
+                    </div>
+                  </div>
+                </td>
+                <td className="px-6 py-4 whitespace-nowrap">
+                  <div className="text-sm text-gray-900">{user.email}</div>
+                  <div className="text-sm text-gray-500">{user.phone}</div>
+                </td>
+                <td className="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
+                  <button className="text-gray-500 hover:text-red-600">
+                    <Trash2 className="h-5 w-5" />
                   </button>
                 </td>
               </tr>
@@ -110,195 +135,10 @@ const UsersPage = () => {
         </table>
       </div>
 
-      {/* Pagination Buttons */}
-      <div className="mt-6 flex justify-center space-x-2">
-        {Array.from({ length: totalPages }, (_, i) => i + 1).map((page) => (
-          <button
-            key={page}
-            onClick={() => handlePageChange(page)}
-            className={`px-4 py-2 rounded-md border ${
-              currentPage === page
-                ? "bg-blue-600 text-white border-blue-600"
-                : "bg-white text-blue-600 border-gray-300 hover:bg-blue-50"
-            }`}
-          >
-            {page}
-          </button>
-        ))}
-      </div>
-
-      {/* Edit Role Modal */}
-      {isModalOpen && (
-        <EditRoleModal
-          user={selectedUser}
-          onClose={closeModal}
-          onSave={handleUpdateRole}
-        />
-      )}
+      {/* Pagination */}
+      <Pagination />
     </div>
-  );
-};
+  )
+}
 
-// Edit Role Modal Component
-const EditRoleModal = ({ user, onClose, onSave }) => {
-  const [role, setRole] = useState(user.role);
-  const [subRole, setSubRole] = useState(user.subRole || "");
-
-  // Handle form submission
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    onSave(role, subRole);
-  };
-
-  return (
-    <div className="fixed inset-0 bg-gray-900 bg-opacity-50 flex items-center justify-center">
-      <div className="bg-white p-6 rounded-lg shadow-lg w-full max-w-md">
-        <h2 className="text-xl font-semibold mb-4 text-gray-800">Edit Role</h2>
-        <form onSubmit={handleSubmit}>
-          {/* Role Selection */}
-          <div className="mb-4">
-            <label className="block text-sm font-medium text-gray-700 mb-1">Role</label>
-            <select
-              value={role}
-              onChange={(e) => setRole(e.target.value)}
-              className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
-            >
-              <option value="student">Student</option>
-              <option value="admin">Admin</option>
-              <option value="society member">Society Member</option>
-              <option value="alumni">Alumni</option>
-            </select>
-          </div>
-
-          {/* SubRole Input */}
-          <div className="mb-6">
-            <label className="block text-sm font-medium text-gray-700 mb-1">Sub Role</label>
-            <input
-              type="text"
-              value={subRole}
-              onChange={(e) => setSubRole(e.target.value)}
-              className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
-              placeholder="Enter sub role (optional)"
-            />
-          </div>
-
-          {/* Modal Actions */}
-          <div className="flex justify-end space-x-3">
-            <button
-              type="button"
-              onClick={onClose}
-              className="px-4 py-2 bg-gray-200 text-gray-700 rounded-md hover:bg-gray-300"
-            >
-              Cancel
-            </button>
-            <button
-              type="submit"
-              className="px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700"
-            >
-              Save
-            </button>
-          </div>
-        </form>
-      </div>
-    </div>
-  );
-};
-
-export default UsersPage;
-
-
-
-
-
-
-
-// 'use client';
-
-// import React, { useState } from "react";
-// import { Search, Pencil, Trash2 } from "lucide-react";
-
-// // User object definition
-// const initialUsers = [
-//   { id: "SE-001", name: "Muhamad amir", email: "amir01@gmail.com", role: "Student", status: "active" },
-//   { id: "SE-050", name: "Muhamad Ali", email: "amir01@gmail.com", role: "Alumni", status: "active" },
-//   { id: "SE-236", name: "Ahmed Ali", email: "amir01@gmail.com", role: "Student", status: "active" },
-//   { id: "SE-65", name: "Muhamad ahmed", email: "amir01@gmail.com", role: "Society Member", status: "active" },
-//   { id: "SE-653", name: "ali raza", email: "amir01@gmail.com", role: "Student", status: "active" },
-//   { id: "SE-323", name: "subhan", email: "amir01@gmail.com", role: "Society Member", status: "active" },
-//   { id: "SE-323", name: "hassan", email: "amir01@gmail.com", role: "Student", status: "active" },
-//   { id: "SE-323", name: "alyan", email: "amir01@gmail.com", role: "Student", status: "inactive" },
-//   { id: "SE-323", name: "haseeb", email: "amir01@gmail.com", role: "Student", status: "inactive" },
-//   { id: "SE-223", name: "hanzala", email: "amir01@gmail.com", role: "Society Member", status: "inactive" },
-// ];
-
-// export default function UserTable() {
-//   const [users, setUsers] = useState(initialUsers);
-//   const [searchQuery, setSearchQuery] = useState("");
-
-//   const filteredUsers = users.filter((user) =>
-//     user.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
-//     user.id.toLowerCase().includes(searchQuery.toLowerCase()) ||
-//     user.email.toLowerCase().includes(searchQuery.toLowerCase())
-//   );
-
-//   return (
-//     <div className="p-6 space-y-6">
-//       <div className="flex flex-col sm:flex-row gap-4 items-center justify-between">
-//         <div className="relative flex-1 w-full">
-//           <Search className="absolute left-2 top-2.5 h-4 w-4 text-gray-500" />
-//           <input
-//             type="text"
-//             placeholder="Search"
-//             className="pl-8 pr-4 py-2 border border-gray-300 rounded w-full focus:outline-none focus:ring-2 focus:ring-blue-500"
-//             value={searchQuery}
-//             onChange={(e) => setSearchQuery(e.target.value)}
-//           />
-//         </div>
-//         <button className="bg-red-500 hover:bg-red-600 text-white px-4 py-2 rounded">
-//           Search
-//         </button>
-//       </div>
-//       <div className="border rounded-lg overflow-hidden">
-//         <table className="table-auto w-full border-collapse">
-//           <thead className="bg-gray-100">
-//             <tr>
-//               {/* <th className="p-3 text-left ">
-//                 <input type="checkbox" />
-//               </th> */}
-//               <th className="pl-4 text-left">Rollno</th>
-//               <th className="p-3 text-left">Name</th>
-//               <th className="p-3 text-left">Email</th>
-//               <th className="p-3 text-left">Role</th>
-//               <th className="p-3 text-left">Gender</th>
-//               <th className="p-3 text-left w-[100px]">Actions</th>
-//             </tr>
-//           </thead>
-//           <tbody>
-//             {filteredUsers.map((user) => (
-//               <tr key={user.id + user.name} className="border-t">
-//                 {/* <td className="p-3">
-//                 {user.id}
-//                 </td> */}
-                
-//                 <td className="pl-4"> {user.id}</td>
-//                 <td className="p-3">{user.name}</td>
-//                 <td className="p-3">{user.email}</td>
-//                 <td className="p-3">{user.role}</td>
-//                 <td className="p-3">{user.status}</td>
-
-//                 <td className="p-3 flex gap-2">
-//                   <button className="p-1 hover:bg-gray-200 rounded pl-4">
-//                     <Pencil className="h-4 w-4 " />
-//                   </button>
-//                   {/* <button className="p-1 hover:bg-gray-200 rounded">
-//                     <Trash2 className="h-4 w-4" />
-//                   </button> */}
-//                 </td>
-//               </tr>
-//             ))}
-//           </tbody>
-//         </table>
-//       </div>
-//     </div>
-//   );
-// }
+export default ManageUsers
