@@ -138,7 +138,7 @@ const Chat = () => {
                 key={message.id}
                 className={`mb-4 max-w-[70%] ${
                   message.sender === "admin"
-                    ? "ml-auto bg-teal-900 text-white rounded-tl-lg rounded-tr-lg rounded-bl-lg"
+                    ? "ml-auto bg-[#003732] text-white rounded-tl-lg rounded-tr-lg rounded-bl-lg"
                     : "mr-auto bg-gray-100 text-gray-800 rounded-tr-lg rounded-br-lg rounded-bl-lg"
                 } p-3 rounded-lg`}
               >
@@ -157,7 +157,7 @@ const Chat = () => {
                 placeholder="Type your query here..."
                 className="flex-1 px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-1 focus:ring-teal-500"
               />
-              <button type="submit" className="p-2 bg-teal-900 text-white rounded-full hover:bg-teal-800">
+              <button type="submit" className="p-2 bg-[#003732] text-white rounded-full hover:bg-teal-800">
                 <Send className="h-5 w-5" />
               </button>
             </form>

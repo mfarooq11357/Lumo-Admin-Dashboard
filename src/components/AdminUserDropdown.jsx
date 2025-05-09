@@ -11,9 +11,9 @@ const AdminUserDropdown = () => {
         onMouseEnter={() => setShowSignOut(true)}
         onMouseLeave={() => setShowSignOut(false)}
       >
-        <span className="text-teal-900 font-medium">Admin User</span>
+        <span className="text-[#003732] font-medium">Admin User</span>
         <div className="h-8 w-8 rounded-full bg-gray-200 flex items-center justify-center">
-          <Menu className="h-5 w-5 text-teal-900" />
+          <Menu className="h-5 w-5 text-[#003732]" />
         </div>
 
         {/* Sign Out Dropdown */}

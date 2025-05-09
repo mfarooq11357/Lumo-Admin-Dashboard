@@ -27,7 +27,7 @@ const LoginPage = () => {
       {/* Right side - Login Form */}
       <div className="flex items-center justify-center px-8 md:px-16 lg:px-24 bg-white">
         <div className="w-full max-w-md">
-          <h1 className="text-4xl font-normal text-teal-900 mb-12">sign-in</h1>
+          <h1 className="text-4xl font-normal text-[#003732] mb-12">sign-in</h1>
 
           <form onSubmit={handleSubmit} className="space-y-8">
             <div>
@@ -36,7 +36,7 @@ const LoginPage = () => {
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
                 placeholder="Email"
-                className="w-full border-b border-gray-300 py-2 focus:outline-none focus:border-teal-900"
+                className="w-full border-b border-gray-300 py-2 focus:outline-none focus:border-[#003732]"
                 required
               />
             </div>
@@ -47,7 +47,7 @@ const LoginPage = () => {
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
                 placeholder="Password"
-                className="w-full border-b border-gray-300 py-2 focus:outline-none focus:border-teal-900 mb-10"
+                className="w-full border-b border-gray-300 py-2 focus:outline-none focus:border-[#003732] mb-10"
                 required
               />
             </div>

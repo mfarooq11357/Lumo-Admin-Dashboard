@@ -55,9 +55,9 @@ const Dashboard = () => {
             onMouseEnter={() => setShowSignOut(true)}
             onMouseLeave={() => setShowSignOut(false)}
           >
-            <span className="text-teal-900 font-medium">Admin User</span>
+            <span className="text-[#003732] font-medium">Admin User</span>
             <div className="h-8 w-8 rounded-full bg-gray-200 flex items-center justify-center">
-              <Menu className="h-5 w-5 text-teal-900" />
+              <Menu className="h-5 w-5 text-[#003732]" />
             </div>
 
             {/* Sign Out Dropdown */}
@@ -74,7 +74,7 @@ const Dashboard = () => {
       </div>
 
       {/* Dashboard Header */}
-      <h1 className="text-2xl font-bold text-teal-900 mb-6">Dashboard Overview</h1>
+      <h1 className="text-2xl font-bold text-[#003732] mb-6">Dashboard Overview</h1>
 
       {/* Stats Grid */}
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
@@ -93,12 +93,12 @@ const Dashboard = () => {
       <div className="mt-8 grid grid-cols-1 lg:grid-cols-2 gap-6">
         {/* Recent Activity */}
         {/* <div className="border border-gray-200 rounded-lg p-6">
-          <h2 className="text-lg font-semibold text-teal-900 mb-4">Recent Activity</h2>
+          <h2 className="text-lg font-semibold text-[#003732] mb-4">Recent Activity</h2>
           <div className="space-y-4">
             {[1, 2, 3, 4].map((item) => (
               <div key={item} className="flex items-center justify-between pb-4 border-b border-gray-100">
                 <div className="flex items-center gap-3">
-                  <div className="h-10 w-10 rounded-full bg-gray-100 flex items-center justify-center text-teal-900 font-medium">
+                  <div className="h-10 w-10 rounded-full bg-gray-100 flex items-center justify-center text-[#003732] font-medium">
                     U{item}
                   </div>
                   <div>
@@ -117,7 +117,7 @@ const Dashboard = () => {
 
         {/* Charger Status */}
         {/* <div className="border border-gray-200 rounded-lg p-6">
-          <h2 className="text-lg font-semibold text-teal-900 mb-4">Charger Status</h2>
+          <h2 className="text-lg font-semibold text-[#003732] mb-4">Charger Status</h2>
           <div className="space-y-4">
             {[1, 2, 3, 4].map((item) => (
               <div key={item} className="flex items-center justify-between pb-4 border-b border-gray-100">

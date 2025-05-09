@@ -84,7 +84,7 @@ const ChargerManagement = () => {
 
       {/* Page Header */}
       <div className="mb-6">
-        <h1 className="text-2xl font-bold text-teal-900">Charger Management</h1>
+        <h1 className="text-2xl font-bold text-[#003732]">Charger Management</h1>
         <p className="text-gray-600">Remove chargers and monitor their real-time status.</p>
       </div>
 
@@ -118,7 +118,7 @@ const ChargerManagement = () => {
       {/* Chargers Table */}
       <div className="border border-gray-200 rounded-lg overflow-hidden mb-8">
         <table className="min-w-full divide-y divide-gray-200">
-          <thead className="bg-teal-900 text-white">
+          <thead className="bg-[#003732] text-white">
             <tr>
               <th className="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider">Charger ID</th>
               <th className="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider">Type</th>
@@ -157,7 +157,7 @@ const ChargerManagement = () => {
 
       {/* Visual Display of Sessions */}
       <div className="mt-12">
-        <h2 className="text-xl font-bold text-teal-900 mb-6">Visual Display of Sessions</h2>
+        <h2 className="text-xl font-bold text-[#003732] mb-6">Visual Display of Sessions</h2>
         <div className="flex flex-col space-y-4">
           {Object.entries(sessionCounts).map(([month, count]) => (
             <div key={month} className="flex items-center">

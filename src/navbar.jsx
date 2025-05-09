@@ -13,7 +13,7 @@ const Navbar = () => {
   ]
 
   return (
-    <div className="min-h-screen w-[243px] bg-teal-900 text-white ">
+    <div className="min-h-screen w-[243px] bg-[#003732] text-white ">
       {/* Sidebar Header */}
       <div className="p-4 mb-4">
         <h1 className="text-xl font-bold text-white">EV Admin Dashboard</h1>
@@ -27,7 +27,7 @@ const Navbar = () => {
             to={item.to}
             className={({ isActive }) =>
               `flex items-center p-3 rounded-md transition-colors w-full ${
-                isActive ? "bg-white text-teal-900" : "text-white hover:bg-teal-800"
+                isActive ? "bg-white text-[#003732]" : "text-white hover:bg-teal-800"
               }`
             }
           >

@@ -53,7 +53,7 @@ const ManageUsers = () => {
 
       {/* Page Header */}
       <div className="mb-6">
-        <h1 className="text-2xl font-bold text-teal-900">User Management</h1>
+        <h1 className="text-2xl font-bold text-[#003732]">User Management</h1>
         <p className="text-gray-600">View and manage all users of the Station Finder app</p>
       </div>
 
@@ -99,7 +99,7 @@ const ManageUsers = () => {
       {/* Users Table */}
       <div className="border border-gray-200 rounded-lg overflow-hidden">
         <table className="min-w-full divide-y divide-gray-200">
-          <thead className="bg-teal-900 text-white">
+          <thead className="bg-[#003732] text-white">
             <tr>
               <th className="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider">User</th>
               <th className="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider">Email/Phone</th>
